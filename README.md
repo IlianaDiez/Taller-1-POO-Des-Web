@@ -1,61 +1,160 @@
-# Taller #1 - Programación Orientada a Objetos (POO) en PHP
-**Instructor:** Irina Fong  
-**Grupo:** 1S3122  
+# Laboratorio #3 Include - Formularios HTML5
 
-## 🛠️ Tecnología Utilizada
-* **PHP 8.x:** Utilizado para la implementación del paradigma de Programación Orientada a Objetos (clases, visibilidad, herencia, resolución estática y constantes).
-* **HTML5 & Bootstrap 5.3:** Utilizados para la maquetación responsiva y presentación visual limpia mediante tarjetas interactivas.
-* **Google Fonts:** Incorporación de la tipografía *Plus Jakarta Sans* para una interfaz moderna e industrial.
-* **WampServer / Apache:** Servidor local utilizado para la ejecución y prueba de los scripts PHP.
-* **Git & GitHub:** Control de versiones del proyecto.
+**Universidad Tecnológica de Panamá** – Facultad de Ingeniería de Sistemas Computacionales
+**Módulo III:** Programación de Aplicaciones Web – Desarrollo Web
 
-## 📋 Información relevante del laboratorio
-Durante el **Taller #1 - Programación Orientada a Objetos en PHP** se practicaron los conceptos fundamentales de la POO en lenguaje PHP: herencia de clases, miembros y métodos estáticos, la diferencia entre `self::` y `static::` (Late Static Binding), restricción de herencia con la palabra clave `final`, constantes matemáticas y el modelado jerárquico de entidades del mundo real.
+| | |
+|---|---|
+| **Instructor** | Irina Fong |
+| **Grupo** | 1S3122 |
+| **Autor** | Iliana Diez |
+| **Fecha** | 9 de octubre de 2026 |
 
-## 🧩 Descripción de los Ejercicios Desarrollados
-### 1. Herencia Básica y Sobrescritura (`Problema1.php`)
-- Definición de la clase base `Coche` con la propiedad protegida `$color` y métodos getter/setter.
-- Creación de la clase derivada `CocheDeLujo` que extiende de `Coche` e incorpora el atributo protegido `$extras`.
-- Sobrescritura del método `printCaracteristicas()` en la clase hija para mostrar tanto el color heredado como los extras del vehículo dentro de una tarjeta estructurada con Bootstrap.
+---
 
-### 2. Late Static Binding vs Static Binding (`Problema2.php`)
-- Implementación de herencia entre las clases `A` y `B` para comparar la resolución de métodos estáticos.
-- Análisis del operador `self::` (resolución en tiempo de compilación referenciando a la clase donde fue escrito el método) frente a `static::` (Late Static Binding, resolución en tiempo de ejecución referenciando a la clase que realiza la llamada).
+## 📋 Detalles del Laboratorio
 
-### 3. Restricción de Herencia (`Problema3.php`)
-- Demostración del uso de la palabra reservada `final` antepuesta a la declaración de una clase (`final class Coche`).
-- Comprobación del mecanismo de seguridad de PHP, el cual lanza un **Fatal Error** (`Class CocheDeLujo cannot extend final class Coche`) al intentar extender una clase sellada.
+Se desarrolló un **Sistema Modular de Registro de Aspirantes** sin uso de bases de datos. El proyecto demuestra el manejo seguro de formularios, la subida y validación de archivos multimedia, la normalización de cadenas, el cálculo de fechas y la separación modular de vistas con `include`.
 
-### 4. Encapsulamiento y Constantes en Clases (`Problema4.php`)
-- Construcción de la clase `Circulo` con el atributo privado `$radio` encapsulado y métodos para calcular el área ($\pi \times r^2$) y el perímetro ($2 \times \pi \times r$).
-- Uso de la constante matemática predefinida `M_PI` y formateo numérico con `number_format()`.
-- Incorporación de un formulario interactivo con el método `POST` para permitir la entrada dinámica del radio por parte del usuario.
+### 1. Arquitectura modular (`includes/header.php` y `includes/footer.php`)
+- El encabezado, la navegación, los metadatos, los estilos y el pie de página son componentes reutilizables incluidos con `include`.
+- El menú tiene migas de pan (breadcrumbs) dinámicas que detectan la página actual con `basename($_SERVER['PHP_SELF'])`.
+- El pie de página genera el año en curso con `date('Y')`.
 
-### 5. Sistema Escolar y Modelado Jerárquico (`Problema#5/`)
-- **Clase Base (`Persona.php`):** Encapsula los datos universales de una persona (`$nombre`, `$apellido`, `$fechaNacimiento`).
-- **Clase Derivada (`Estudiante.php`):** Hereda de `Persona` e incorpora lógica propia del perfil estudiantil (`$indiceAcademico`, `$cohorte`, `$estadoAcademico`, `$modalidadEstudio`).
-- **Clase Derivada (`Docente.php`):** Hereda de `Persona` e incorpora atributos del perfil académico/profesoral (`$codigoDocente`, `$departamento`, `$categoria`, `$maximoTitulo`, `$tipoContratacion`).
-- **Vista de Pruebas (`Problema#5/index.php`):** Instanciación de los objetos y renderizado de las fichas informativas en tarjetas estilizadas.
+### 2. Formulario de registro (`index.php`)
+- Formulario con tarjetas responsivas de Bootstrap 5.3.
+- Usa `enctype="multipart/form-data"` para enviar la fotografía.
+- Campos requeridos, con `placeholder`, selector de fecha, botones de opción para el sexo y restricción de extensiones en el campo de archivo.
 
-## ✅ Cumplimiento de lo solicitado
-- Todos los ejercicios fueron probados y ejecutados exitosamente en el servidor web local WampServer.
-- Se implementó un panel principal (`index.php`) para facilitar la navegación fluida entre todos los problemas del taller.
-- Se aplicó una capa visual consistente usando Bootstrap 5.3 y tipografía moderna en todos los componentes del proyecto.
+### 3. Procesamiento y validación (`procesar.php`)
+- **Saneamiento:** `trim()`, `strip_tags()` y `htmlspecialchars()` para prevenir XSS.
+- **Normalización:** nombre y apellido en formato título (equivalente UTF-8 de `ucwords(strtolower())`, por ejemplo "sofía" → "Sofía") y la identificación en mayúsculas (equivalente UTF-8 de `strtoupper()`).
+- **Edad:** se calcula con `DateTime` y `diff()`, y debe estar entre 18 y 70 años. Se rechazan fechas inválidas y futuras.
+- **Foto:** solo se aceptan `jpg`, `jpeg`, `png`, `gif` y `webp`, se verifica que el contenido sea una imagen real y que pese máximo 5 MB.
+- **Errores:** si algo falla, se muestra una pantalla de alerta con todos los errores y un botón para volver. La foto solo se guarda cuando todo lo demás es válido.
 
-## 🎯 Conclusión
-La realización del taller permitió afianzar el uso práctico de la Programación Orientada a Objetos en PHP, comprendiendo cómo estructurar arquitecturas reutilizables y mantenibles mediante la herencia, el encapsulamiento de datos, el control explícito de extensiones con `final` y la resolución dinámica de referencias estáticas.
+### 4. Almacenamiento seguro de fotografías (`uploaded_files/`)
+- El nombre original se limpia y se le antepone una marca de tiempo (`time()`) para evitar colisiones.
+- El archivo se mueve con `move_uploaded_file()` y se le asignan permisos `0644`.
+
+### 5. Seguridad de la carpeta (`uploaded_files/.htaccess`)
+- `Require all denied` bloquea todo acceso directo desde el navegador a la carpeta (responde **403 Forbidden**).
+- `Options -Indexes` desactiva el listado de archivos.
+- Como el navegador no puede pedir las fotos directamente, `procesar.php` las lee en el servidor y las incrusta en la página con `base64`.
+
+---
+
+## 🛠️ Tecnologías y Versiones
+
+| Tecnología | Versión | Uso |
+|---|---|---|
+| PHP | `[COMPLETAR: resultado de php -v]` | Lógica del servidor, validación y subida de archivos |
+| Apache | `[COMPLETAR]` | Servidor web y reglas `.htaccess` |
+| WampServer | `[COMPLETAR]` | Entorno local de ejecución |
+| HTML5 | – | Maquetación semántica |
+| Bootstrap | 5.3.8 | Diseño responsivo |
+| Bootstrap Icons | 1.11.3 | Iconografía |
+| Google Fonts | Plus Jakarta Sans | Tipografía |
+| Git y GitHub | – | Control de versiones |
+
+---
+
+## 🎛️ Controles Utilizados
+
+| Control | Tipo / atributo | Campo |
+|---|---|---|
+| Cuadro de texto | `input type="text"`, `required`, `placeholder` | Nombre, apellido, identificación |
+| Selector de fecha | `input type="date"`, `required` | Fecha de nacimiento |
+| Botones de opción | `input type="radio"` con estilo Bootstrap | Sexo |
+| Carga de archivo | `input type="file"`, extensiones restringidas | Fotografía del aspirante |
+| Botón de envío | `button type="submit"` | Registrar Aspirante |
+
+![Formulario vacío](img/lab3-01-formulario-vacio.png)
+
+---
+
+## ⚙️ Proceso de Instalación
+
+1. Instalar **WampServer** y comprobar que el icono esté en verde.
+2. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/IlianaDiez/Lab3-Include.git
+   ```
+3. Copiar la carpeta `TallerAspirantes` dentro de `C:\wamp64\www\`.
+4. Verificar que Apache tenga habilitado `AllowOverride All` para que se lea el `.htaccess`.
+5. Abrir en el navegador: `http://localhost/TallerAspirantes/index.php`
+
+![WampServer en verde y proyecto en localhost](img/lab3-08-instalacion.png)
+
+---
+
+## 🖼️ Evidencias
+
+### Insertar registros
+Formulario completado:
+
+<img width="931" height="865" alt="Captura de pantalla 2026-10-09 094602" src="https://github.com/user-attachments/assets/418b576f-9627-4c3b-9c1a-61b7c7826685" />
+
+
+Resultado del registro exitoso:
+
+<img width="1028" height="626" alt="Captura de pantalla 2026-10-09 094614" src="https://github.com/user-attachments/assets/aa1408ae-fc2b-417a-a0c9-5fa7502a0f8f" />
+
+
+### Validaciones
+Edad fuera del rango permitido:
+
+![Error de edad](img/lab3-04-error-edad.png)
+
+Formato de imagen no permitido:
+
+![Error de formato de imagen](img/lab3-05-error-formato.png)
+
+### Almacenamiento y seguridad de la carpeta
+Fotografías guardadas con marca de tiempo en `uploaded_files/`:
+
+![Carpeta uploaded_files](img/lab3-06-uploaded-files.png)
+
+Regla `.htaccess` aplicada:
+
+![Archivo .htaccess](img/lab3-07-htaccess.png)
+
+Acceso directo bloqueado desde el navegador (403 Forbidden):
+
+![Acceso directo bloqueado](img/lab3-09-403.png)
+
+### Modificar y eliminar registros
+No aplica. Este laboratorio no usa base de datos, por lo que no hay operaciones de modificar ni eliminar registros.
+
+---
 
 ## 📁 Estructura del repositorio
-```text
-Taller1-POO/
-├── Problema1.php
-├── Problema2.php
-├── Problema3.php
-├── Problema4.php
-├── Problema#5/
-│   ├── Persona.php
-│   ├── Estudiante.php
-│   ├── Docente.php
-│   └── index.php
-├── index.php
-└── README.md
+
+```
+Lab3-Include/
+└── TallerAspirantes/
+    ├── includes/
+    │   ├── header.php
+    │   └── footer.php
+    ├── uploaded_files/
+    │   └── .htaccess
+    ├── img/
+    ├── index.php
+    ├── procesar.php
+    └── README.md
+```
+
+---
+
+## 🎯 Conclusión
+
+El laboratorio permitió reforzar PHP y HTML5 mediante un sistema modular que valida entradas, calcula fechas, sube archivos de forma controlada y protege la carpeta de cargas con `.htaccess`.
+
+---
+
+## 📚 Referencias
+
+- Material del curso de Desarrollo Web, Ing. Irina Fong (Laboratorio #3, Include y formularios).
+- Manual de PHP: https://www.php.net/manual/es/
+- Documentación de Bootstrap 5.3: https://getbootstrap.com/docs/5.3/
+- Documentación de Apache 2.4 (`Require`): https://httpd.apache.org/docs/2.4/
