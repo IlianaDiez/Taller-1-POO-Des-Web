@@ -104,29 +104,27 @@ Resultado del registro exitoso:
 ### Validaciones
 Edad fuera del rango permitido:
 
-![Error de edad](img/lab3-04-error-edad.png)
+<img width="1640" height="572" alt="Captura de pantalla 2026-10-09 094754" src="https://github.com/user-attachments/assets/1fa964a6-0d56-4097-9d39-5b6614774a3c" />
+
 
 Formato de imagen no permitido:
+<img width="1002" height="617" alt="Captura de pantalla 2026-10-09 100100" src="https://github.com/user-attachments/assets/5c785377-6994-482e-8d8b-ba728c6e0d22" />
 
-![Error de formato de imagen](img/lab3-05-error-formato.png)
 
 ### Almacenamiento y seguridad de la carpeta
 Fotografías guardadas con marca de tiempo en `uploaded_files/`:
+<img width="1860" height="987" alt="Captura de pantalla 2026-10-09 095055" src="https://github.com/user-attachments/assets/0bbb0532-1d39-4a37-ac44-596226fb9462" />
 
-![Carpeta uploaded_files](img/lab3-06-uploaded-files.png)
+
 
 Regla `.htaccess` aplicada:
 
-![Archivo .htaccess](img/lab3-07-htaccess.png)
+<img width="1212" height="598" alt="Captura de pantalla 2026-10-09 095038" src="https://github.com/user-attachments/assets/e0b4d137-1345-4003-ae67-c01cb25d9cec" />
+
 
 Acceso directo bloqueado desde el navegador (403 Forbidden):
+<img width="763" height="616" alt="Captura de pantalla 2026-10-09 100503" src="https://github.com/user-attachments/assets/d0bc0fdb-c042-4edd-824e-1106c237b7ac" />
 
-![Acceso directo bloqueado](img/lab3-09-403.png)
-
-### Modificar y eliminar registros
-No aplica. Este laboratorio no usa base de datos, por lo que no hay operaciones de modificar ni eliminar registros.
-
----
 
 ## 📁 Estructura del repositorio
 
